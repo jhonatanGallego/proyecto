@@ -33,6 +33,9 @@ export const ShopContextProvider = (props) => {
     
     const [nombreUser, setNombreUser] = useState('');
     const NombreUser = (value) => setNombreUser(value);
+
+    const [cedulaUser, setCedulaUser] = useState('');
+    const CedulaUser = (value) => setCedulaUser(value);
     
     const getProducts = async () => {
         const res = await axios.get(URI)
@@ -98,7 +101,8 @@ export const ShopContextProvider = (props) => {
         }) 
     };
 
-    const contextValue = { cartItems, addToCart, removeFromCart, getTotalCartAmount, loggedChanger, logged, AdminChanger, admin, payAumount,setPayAumount, nombreUser, NombreUser};
+    const contextValue = { cartItems, addToCart, removeFromCart, getTotalCartAmount, loggedChanger, logged, AdminChanger, admin,
+                           payAumount,setPayAumount, nombreUser, NombreUser, cedulaUser, CedulaUser};
     return (
         <ShopContext.Provider value={contextValue}>
             {props.children}

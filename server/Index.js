@@ -82,7 +82,7 @@ app.get("/inventario/:id",(req,res)=> {
 /* Listar todos los usuarios de la tabla de usuarios */
 app.get("/usuarios",(req,res)=> {
     
-    baseDatos.query("SELECT * FROM usuarios",
+    baseDatos.query("SELECT * FROM usuarios usu, terceros ter where ter.cedula = usu.cedula_tercero",
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -98,6 +98,21 @@ app.get("/usuarios",(req,res)=> {
 app.get("/buscarUsuario/:email",(req,res)=> {
     const email= req.params.email;
     baseDatos.query("SELECT * FROM usuarios usu, terceros ter where usu.user = ? and ter.cedula = usu.cedula_tercero", [email],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send(result);
+            }
+        }
+    );  
+});
+
+/* Buscar un usuario por la cedula en la tabla de usuarios */
+app.get("/buscarCedula/:cedula",(req,res)=> {
+    const cedula= req.params.cedula;
+    baseDatos.query("SELECT * FROM usuarios usu, terceros ter where ter.cedula = ? and ter.cedula = usu.cedula_tercero", [cedula],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -146,16 +161,12 @@ app.post("/createUsers",(req,res) =>{
 
 /*Actualizar un usuario */
 app.put("/updateUsuario",(req,res) =>{
-    const user= req.body.users;
     const cedula= req.body.cedula;
     const nombre= req.body.nombre;
-    const email= req.body.email;
     const telefono= req.body.telefono;
     const direccion= req.body.direccion;
 
-    const password= req.body.password;
-
-    baseDatos.query("UPDATE tercero SET nombre=?, correo=?, telefono=?, direccion=? WHERE cedula=?",[nombre,email,telefono,direccion,cedula],
+    baseDatos.query("UPDATE terceros SET nombre=?, telefono=?, direccion=? WHERE cedula=?",[nombre,telefono,direccion,cedula],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -165,8 +176,14 @@ app.put("/updateUsuario",(req,res) =>{
             }
         }
     );
+});
 
-    baseDatos.query("UPDATE usuarios SET password=? WHERE user=?",[password,email],
+/*Actualizar un USER */
+app.put("/updateUser",(req,res) =>{
+    const cedula= req.body.cedula;
+    const password= req.body.password;
+
+    baseDatos.query("UPDATE usuarios SET password=? WHERE cedula_tercero=?",[password,cedula],
         (err,result)=>{
             if(err){
                 console.log(err);

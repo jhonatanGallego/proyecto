@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 //import { AddressBook } from "phosphor-react";
 import "../hoja-de-estilos/navbar.css";
@@ -7,7 +7,7 @@ import { ShopContext } from "../context/shop-context";
 
 export const Navbar = () => {
     const context = useContext(ShopContext);
-    console.log(context.logged);
+
     return (
         <div className="navbar">
         { !context.admin ? 
@@ -22,6 +22,7 @@ export const Navbar = () => {
                         <p className="bienvenido">Bienvenido {context.nombreUser} </p>
                     </div>
                     <div className="links">
+                        <Link to="/actualizarDatos">Actualizar datos</Link>
                         <Link to="/shop"> Seguir Comprando </Link>
                         <Link to="/cart"> Pagar</Link>
                     </div>

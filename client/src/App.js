@@ -8,6 +8,7 @@ import {Footer} from "./componentes/Footer.jsx";
 
 //Paginas
 import Login from "./paginas/Login/Login.jsx";
+import ActualizaDatos from "./paginas/Users/ActualizarDatos.jsx";
 import Register from "./paginas/Registro/register.jsx";
 import EditarPerfiles from "./paginas/Admin/EditarPerfiles/EditarPerfiles.jsx";
 import EditarInventario from "./paginas/Admin/EditarProductos/EditarInventario.jsx";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/shop" element={<ShopAddtoCart />}/>
             <Route path="/" element={<Shop />}/>
             <Route path="/login" element={<Login />}/>
+            <Route path="/actualizarDatos" element={<ActualizaDatos />}/>
             <Route path="/editarPerfiles" element={<EditarPerfiles />}/>
             <Route path="/editarInventario" element={<EditarInventario />}/>
             <Route path="/register" element={<Register />}/>

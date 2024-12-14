@@ -6,11 +6,16 @@ import Swal from 'sweetalert2';
 
 const EditarPerfiles = () => {
     let existe = 0;
-    const [nombre, setNombre] = useState('');
+    //Usuario
+    const [users, setUsers] = useState([]);
     const [password, setPassword] = useState('');
+    //Tercero
+    const [nombre, setNombre] = useState('');
+    const [cedula, setCedula] = useState('');
     const [telefono, setTelefono] = useState('');
     const [email, setEmail] = useState('');
-    const [users, setUsers] = useState([]);
+    const [direccion, setDireccion] = useState('');
+    
     
     const [usuariosLista, setUsuarios] = useState([]);
     const [editar, setEditar] = useState(false);
@@ -27,16 +32,20 @@ const EditarPerfiles = () => {
         setPassword("");
         setEmail("");
         setTelefono("");
+        setCedula("");
+        setDireccion("");
         setEditar(false);
       };
 
-    const editarEmpleado = (val) => {
+    const editarTercero = (val) => {
         setEditar(true);
         setNombre(val.nombre);
         setUsers(val.user);
         setPassword(val.password);
-        setEmail(val.email);
+        setEmail(val.correo);
         setTelefono(val.telefono);
+        setCedula(val.cedula);
+        setDireccion(val.direccion);
       };
     
     const eliminarUsuario = (user) => {
@@ -50,15 +59,27 @@ const EditarPerfiles = () => {
     const update = () =>{
         axios.put("http://localhost:3001/updateUsuario", {
             nombre: nombre,
-            password: password,
             telefono: telefono,
             email: email,
-            users: users,
+            cedula: cedula,
+            direccion: direccion,
         }).then(()=>{
             Swal.fire("Los campos fueron actualizados satisfactoriamente.");
             getUsuarios();
             limpiarCampos();
         });
+
+        //Si el Admin actualiza la contraseña del usuario
+        if(password){
+            axios.put("http://localhost:3001/updateUser", {
+                password: password,
+                cedula: cedula,
+            }).then(()=>{
+                Swal.fire("La contraseña fue actualizado satisfactoriamente.");
+                getUsuarios();
+                limpiarCampos();
+            });
+        }
     }
 
     useEffect(() => {
@@ -78,15 +99,15 @@ const EditarPerfiles = () => {
 
     const store = async (e) => { 
         e.preventDefault();
-        if (nombre && password && telefono && email){
+        if (nombre && password && telefono && email &&cedula &&direccion){
             getBuscarUser(email);
-            console.log(existe);
             if(existe>=1){
                 Swal.fire("El usuario digitado ya existe en la base de datos.");
             }else{
                 Swal.fire("Usuario creado satisfactoriamente");
                 await axios.post('http://localhost:3001/createUsers', {
-                    nombre: nombre, password: password, telefono: telefono, email: email, users: email });          
+                    nombre: nombre, password: password, telefono: telefono, email: email, users: email,
+                    cedula: cedula, direccion: direccion });
             }
             
         }else{
@@ -99,19 +120,25 @@ const EditarPerfiles = () => {
             <div className="register-form">
                 {editar?<h2>Actualizar Datos</h2>:<h2>Registrar nuevo dato</h2>}
                 <form onSubmit={store} action="/auth" method="post">
+                    {editar?<input value={cedula} onChange={ (e) => setCedula(e.target.value)} type="text" name="cedula" id="cedula" placeholder="Cedula" disabled/>
+                    :<input value={cedula} onChange={ (e) => setCedula(e.target.value)} type="text" name="cedula" id="cedula" placeholder="Cedula"/>}
                     <input 
                     value={nombre}
                     onChange={ (e) => setNombre(e.target.value)}
-                    type="text" name="user" id="user" placeholder="Nombre completo"/>
+                    type="text" name="nombre" id="nombre" placeholder="Nombre completo"/>
                     <input 
                     value={password}
                     onChange={ (e) => setPassword((e.target.value))}
-                    type="password" name="pass" id="pass" placeholder="Contraseña"/>
+                    type="password" name="pass" id="pass" placeholder="Nueva Contraseña"/>
                     <input 
                     value={telefono}
                     onChange={ (e) => setTelefono(e.target.value)}
-                    type="text" name="pass" id="pass" placeholder="telefono"/>
-                    {editar?null:<input value={email} onChange={ (e) => setEmail(e.target.value)} type="text" name="pass" id="pass" placeholder="Correo electronico"/>}
+                    type="text" name="telefono" id="telefono" placeholder="telefono"/>
+                    <input 
+                    value={direccion}
+                    onChange={ (e) => setDireccion(e.target.value)}
+                    type="text" name="direccion" id="direccion" placeholder="Direccion"/>
+                    {editar?null:<input value={email} onChange={ (e) => setEmail(e.target.value)} type="text" name="email" id="email" placeholder="Correo electronico"/>}
                     {editar?null:<input type="submit" className="btn-login" value="Registrar" />}
                     
                 </form>
@@ -125,9 +152,11 @@ const EditarPerfiles = () => {
                         <tr>
                             <th scope="col">Usuario</th>
                             <th scope="col">Contraseña</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Telefono</th>
+                            <th scope="col">Cedula</th>
                             <th scope="col">Nombre completo</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Correo electronico</th>
+                            <th scope="col">Dirección</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -136,11 +165,13 @@ const EditarPerfiles = () => {
                         <tr>
                             <td scope="row">{val.user}</td>
                             <td>{"****"} </td>
-                            <td>{val.email} </td>
-                            <td>{val.telefono} </td>
+                            <td>{val.cedula} </td>
                             <td>{val.nombre} </td>
+                            <td>{val.telefono} </td>
+                            <td>{val.correo} </td>
+                            <td>{val.direccion} </td>
                             <td>
-                                <button type="button" onClick={() => {editarEmpleado(val);}}className="btn-editar">
+                                <button type="button" onClick={() => {editarTercero(val);}}className="btn-editar">
                                     Editar
                                 </button>
                                 <button type="button" className="btn-eliminar" onClick={() => {eliminarUsuario(val.user);}}>

@@ -54,6 +54,9 @@ const Login = () => {
         context.NombreUser(a.map(u => (
             u.nombre
        )));
+       context.CedulaUser(a.map(u => (
+        u.cedula
+   )));
     }
 
 
