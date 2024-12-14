@@ -195,17 +195,17 @@ app.put("/updateUser",(req,res) =>{
     );
 });
 
-//Funcion para borrar los datos en la base de datos.
-app.delete("/deleteUsuarios/:users",(req,res) =>{
-    const user= req.params.users;
-
-    baseDatos.query("DELETE FROM usuarios WHERE user=?",[user],
+//Funcion para inactivar un usuario.
+app.put("/inactivarUser",(req,res) =>{
+    const cedula= req.body.cedula;
+    const activar= req.body.activar;
+    baseDatos.query("UPDATE usuarios SET activo=? WHERE cedula_tercero=?",[activar,cedula],
         (err,result)=>{
             if(err){
                 console.log(err);
             }
             else{
-                res.send(result);
+                res.send("usuario actualizado con exito");
             }
         }
     );

@@ -9,9 +9,9 @@ export const Product = (props) => {
             <div className="slide-var">
                 <Link to="/login">
                     <ul>
-                        <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
-                        <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
-                        <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
+                        <li><img className="logo" src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
+                        <li><img className="logo" src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
+                        <li><img className="logo" src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
                     </ul>
                 </Link>
             </div>

@@ -8,7 +8,7 @@ const URI = 'http://localhost:3001/listaProductos';
 
 const getDefaultCart = () => {
     let cart = {}
-    for(let i = 0; i < 100 ; i++) {
+    for(let i = 1; i < 100 ; i++) {
         cart[i] = 0
     }
     return cart;

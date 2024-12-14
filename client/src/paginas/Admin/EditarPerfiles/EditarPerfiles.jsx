@@ -48,9 +48,13 @@ const EditarPerfiles = () => {
         setDireccion(val.direccion);
       };
     
-    const eliminarUsuario = (user) => {
-        axios.delete(`http://localhost:3001/deleteUsuarios/${user}`).then(() => {
-          Swal.fire(`El usuario fue eliminado correctamente`);
+    const inactivarUsuario = (cedula,activar) => {
+        axios.put("http://localhost:3001/inactivarUser", {
+            cedula: cedula,
+            activar: activar,
+        }).then(()=>{
+            console.log(cedula+"+"+activar)
+          Swal.fire(`El usuario fue inactivado correctamente`);
           getUsuarios();
           limpiarCampos();
         });
@@ -157,6 +161,7 @@ const EditarPerfiles = () => {
                             <th scope="col">Telefono</th>
                             <th scope="col">Correo electronico</th>
                             <th scope="col">Dirección</th>
+                            <th scope="col">Activo</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -170,13 +175,13 @@ const EditarPerfiles = () => {
                             <td>{val.telefono} </td>
                             <td>{val.correo} </td>
                             <td>{val.direccion} </td>
+                            <td>{val.activo} </td>
                             <td>
                                 <button type="button" onClick={() => {editarTercero(val);}}className="btn-editar">
                                     Editar
                                 </button>
-                                <button type="button" className="btn-eliminar" onClick={() => {eliminarUsuario(val.user);}}>
-                                    Eliminar
-                                </button>
+                                {val.activo=="Y"?<button type="button" className="btn-eliminar" onClick={() => {inactivarUsuario(val.cedula,'N');}}>Inactivar</button>:
+                                <button type="button" className="btn-activar" onClick={() => {inactivarUsuario(val.cedula,'Y');}}>Activar</button>}
                             </td>
                         </tr>
                     );

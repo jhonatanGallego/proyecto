@@ -21,7 +21,7 @@ export const ShopAddtoCart = () => {
     return (
         <div className="shop">
             <div className="shopTitle">
-                <spam>Tienda Virtual</spam><br/>
+                <spam>Tienda Virtual</spam><br/><br/>
                 <img className="logo" src={`http://localhost:3001/images/tienda.png`}/>
             </div>
             <div className="products"> 

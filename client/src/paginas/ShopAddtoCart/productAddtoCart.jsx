@@ -11,6 +11,8 @@ export const Product = (props) => {
             <div className="slide-var">
                 <ul>
                     <li><img src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
+                    <li><img src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
+                    <li><img src={`http://localhost:3001/images/${img}`} alt={nombre}/></li>
                 </ul>
             </div>
             <div className="descripcion">

@@ -41,10 +41,13 @@ const Login = () => {
 
     const compare = () => {
         getUsers();
-        if (users.find(e => e.user === entrada && e.password === entradaP)){
-            return true;
-        }else {
-            return false;
+        if (users.find(e => e.user === entrada && e.password === entradaP &&e.activo==="Y")){
+            return "activo";
+        }else if((users.find(e => e.user === entrada && e.password === entradaP &&e.activo==="N"))){
+            return "inactivo";
+        }
+        else{
+            return "no_existe";
         }
     }
 
@@ -74,7 +77,7 @@ const Login = () => {
                     type="password" name="pass" id="pass" placeholder="Contraseña" />
                 <input type="submit" className="btn-login" value="Iniciar Sesión" onClick={(e) => {
                     e.preventDefault();
-                    if(compare())
+                    if(compare() === "activo")
                     {
                         if (entrada === 'admin')
                         {
@@ -86,6 +89,9 @@ const Login = () => {
                             navigateShopAddtoCart();
                             nombreUsuario(entrada);
                             context.loggedChanger(true);
+                    }else if(compare() === "inactivo"){
+                        Swal.fire(`El usuario se encuentra inactivo, por favor contactar con el administrador.`);
+                        navigateLogin() 
                     }else{
                         Swal.fire(`El usuario o contraseña esta mal digitada`);
                         navigateLogin() 
