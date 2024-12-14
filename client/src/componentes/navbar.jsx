@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, User } from "phosphor-react";
+//import { AddressBook } from "phosphor-react";
 import "../hoja-de-estilos/navbar.css";
 import { ShopContext } from "../context/shop-context";
 
@@ -14,9 +14,7 @@ export const Navbar = () => {
             !context.logged ?
                 <div className="links"> 
                     <Link to="/"> TiendaVirtual </Link> 
-                    <Link to="/login">
-                        <User size={32}/>
-                    </Link>
+                    <Link to="/login">Iniciar sesión</Link>
                 </div>
                 :
                 <div className="links">
@@ -25,9 +23,7 @@ export const Navbar = () => {
                     </div>
                     <div className="links">
                         <Link to="/shop"> Seguir Comprando </Link>
-                        <Link to="/cart"> Pagar
-                            <ShoppingCart size={32} />
-                        </Link>
+                        <Link to="/cart"> Pagar</Link>
                     </div>
                 </div>
                 
