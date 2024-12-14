@@ -195,7 +195,7 @@ app.put("/updateUser",(req,res) =>{
     );
 });
 
-//Funcion para inactivar un usuario.
+//Funcion para inactivar un usuarioS.
 app.put("/inactivarUser",(req,res) =>{
     const cedula= req.body.cedula;
     const activar= req.body.activar;
