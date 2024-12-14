@@ -77,7 +77,7 @@ const Register = () => {
             <input 
                 value={cedula}
                 onChange={ (e) => setCedula(e.target.value)}
-                type="number" name="cedula" id="cedula" placeholder="Numero de identificación"/>
+                type="number" name="cedula" id="cedula" placeholder="Numero de identificación" maxLength="11"/>
                 <input 
                 value={nombre}
                 onChange={ (e) => users.find(event => event.username === e.target.value) ? navigateRegister() : setNombre(e.target.value)}
@@ -97,7 +97,7 @@ const Register = () => {
                 <input 
                 value={email}
                 onChange={ (e) => setEmail(e.target.value)}
-                type="text" name="pass" id="pass" placeholder="Correo electronico"/>
+                type="email" name="email" id="email" placeholder="Correo electronico"/>
                 <input type="submit" className="btn-login" value="Registrar" />
             </form>
             <br/> 

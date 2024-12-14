@@ -10,6 +10,8 @@ export const Product = (props) => {
                 <Link to="/login">
                     <ul>
                         <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
+                        <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
+                        <li><img className="logo" src={`http://localhost:3001/images/${img}`}/></li>
                     </ul>
                 </Link>
             </div>

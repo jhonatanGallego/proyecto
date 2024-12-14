@@ -138,7 +138,7 @@ const EditarPerfiles = () => {
                     value={direccion}
                     onChange={ (e) => setDireccion(e.target.value)}
                     type="text" name="direccion" id="direccion" placeholder="Direccion"/>
-                    {editar?null:<input value={email} onChange={ (e) => setEmail(e.target.value)} type="text" name="email" id="email" placeholder="Correo electronico"/>}
+                    {editar?null:<input value={email} onChange={ (e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Correo electronico"/>}
                     {editar?null:<input type="submit" className="btn-login" value="Registrar" />}
                     
                 </form>

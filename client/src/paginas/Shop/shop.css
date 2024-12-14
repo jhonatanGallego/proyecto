@@ -5,7 +5,7 @@
     font-size: 40px;
   }
 
-  spam {
+  .spam {
   font-size: 50px;
     font-weight: bold;
   }
@@ -50,6 +50,7 @@
     display: flex;
     padding: 0;
     width: 100%;
+    animation: slide 12s infinite alternate ease-in-out;
  }
 
  .slide-var li {

@@ -75,7 +75,7 @@ const EditarPerfiles = () => {
                     <input value={password} onChange={ (e) => setPassword((e.target.value))} type="password" name="pass" id="pass" placeholder="Nueva Contraseña"/>
                     <input value={telefono} onChange={ (e) => setTelefono(e.target.value)} type="text" name="telefono" id="telefono" placeholder="telefono"/>
                     <input value={direccion} onChange={ (e) => setDireccion(e.target.value)} type="text" name="direccion" id="direccion" placeholder="Direccion"/>
-                    <input value={email} onChange={ (e) => setEmail(e.target.value)} type="text" name="email" id="email" placeholder="Correo electronico" disabled/>
+                    <input value={email} onChange={ (e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Correo electronico" disabled/>
                 </form>
                 <br/> 
                 <button  className="btn-login" onClick={update}>Actualizar Usuario</button>
