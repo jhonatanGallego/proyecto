@@ -2,7 +2,7 @@ import React from "react";
 import './login.css';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ShopContext } from "../../context/shop-context";
 import { useContext } from "react";
 import Swal from 'sweetalert2';
@@ -33,9 +33,6 @@ const Login = () => {
     const [entradaP, SetEntradaP] = useState('');
     const [users, setUsers] = useState([]);
     
-    useEffect(() => {
-        getUsers();
-    }, [])
 
     const getUsers = async() => {
         const res = await axios.get(URI)
@@ -43,6 +40,7 @@ const Login = () => {
     }
 
     const compare = () => {
+        getUsers();
         if (users.find(e => e.user === entrada && e.password === entradaP)){
             return true;
         }else {

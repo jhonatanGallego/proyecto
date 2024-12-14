@@ -51,9 +51,8 @@ const Register = () => {
 
     const store = async (e) => { 
         e.preventDefault();
-        if (nombre && password && telefono && email){
+        if (nombre && password && telefono && email && cedula && direccion){
             getBuscarUser(email);
-            console.log(existe);
             if(existe>=1){
                 Swal.fire("El usuario digitado ya existe en la base de datos.");
             }else{

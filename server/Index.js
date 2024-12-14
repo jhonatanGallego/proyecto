@@ -81,6 +81,7 @@ app.get("/inventario/:id",(req,res)=> {
 
 /* Listar todos los usuarios de la tabla de usuarios */
 app.get("/usuarios",(req,res)=> {
+    
     baseDatos.query("SELECT * FROM usuarios",
         (err,result)=>{
             if(err){
