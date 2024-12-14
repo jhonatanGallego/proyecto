@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-//import { AddressBook } from "phosphor-react";
 import "../hoja-de-estilos/navbar.css";
 import { ShopContext } from "../context/shop-context";
 
