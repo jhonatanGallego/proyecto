@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ShopContext } from "../../context/shop-context";
 import { useContext } from "react";
 import Swal from 'sweetalert2';
+import { IconUserCircle } from '@tabler/icons-react';
 
 const URI = 'http://localhost:3001/usuarios/';
 
@@ -66,6 +67,9 @@ const Login = () => {
     return (
         <div className="login-form">
             <h2>Iniciar sesión</h2>
+            <div className="contenedor-img">
+                <IconUserCircle stroke={1} size={100} className="logo-centro"/>
+            </div>
             <form onSubmit={compare()}>
                 <input 
                     value={entrada}

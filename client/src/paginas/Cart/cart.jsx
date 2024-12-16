@@ -13,11 +13,11 @@ const URI = 'http://localhost:3001/listaProductos/';
 
 export const Cart = () => {
     const context = useContext(ShopContext);
-    const { cartItems, getTotalCartAmount } = useContext(ShopContext); 
+    const {cartItems, getTotalCartAmount, vaciarCart } = useContext(ShopContext); 
     const totalAmount = getTotalCartAmount();
     const navigate = useNavigate();
-
-    const[products, setProducts] = useState([])
+    const[products, setProducts] = useState([]);
+    
     useEffect(() => {
         getProducts()
     }, []);
@@ -29,10 +29,22 @@ export const Cart = () => {
 
     const buy = async (e) => {
         e.preventDefault();
-        context.setPayAumount(totalAmount);
-            Swal.fire(`Gracias por la compra ${totalAmount}`);    
-            context.setCartItems(0);
-            navigate ("/shop")
+
+        {products.map((product) => {
+            if (cartItems[product.id] !== 0) {
+                registroCompra(product.id,context.cedulaUser,cartItems[product.id]);
+            }
+        })}
+        Swal.fire(`Gracias por la compra de $${totalAmount.toLocaleString('es-CO')}`);
+        vaciarCart();
+        navigate ("/shop");
+    }
+
+    const registroCompra = async (id_producto,id_cedula,cantidad) => { 
+        Swal.fire("Usuario creado satisfactoriamente");
+        await axios.post('http://localhost:3001/registroCompra', {
+            id_producto: id_producto, id_cedula: id_cedula, cantidad: cantidad 
+        });       
     }
 
     return (

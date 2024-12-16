@@ -3,6 +3,13 @@
     margin: 0 auto;
 }
 
+.contenedor-img {
+    margin: 0 ;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
 .login-form h2 {
     text-align: center;
     color: #000000;
@@ -80,4 +87,15 @@
     font-weight: bold;
     font-size: large;
     color: white;
+}
+
+.logo-centro {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
 }

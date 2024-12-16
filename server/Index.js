@@ -195,7 +195,7 @@ app.put("/updateUser",(req,res) =>{
     );
 });
 
-//Funcion para inactivar un usuarioS.
+//Funcion para inactivar un usuario.
 app.put("/inactivarUser",(req,res) =>{
     const cedula= req.body.cedula;
     const activar= req.body.activar;
@@ -283,6 +283,22 @@ app.post('/images/post', fileUpload,(req, res) => {
     );
 })
 
+/* registrar compra */
+app.post("/registroCompra", fileUpload, (req,res) =>{
+    const id_producto= req.body.id_producto;
+    const id_cedula= req.body.id_cedula;
+    const cantidad= req.body.cantidad;
+    baseDatos.query("INSERT INTO compras (id_producto, id_cedula, cantidad) VALUES (?, ?, ?)",[id_producto,id_cedula,cantidad],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send("compra registrado con exito");
+            }
+        }
+    );
+});
 
 
 /*Publicar imagenes desde el Server */

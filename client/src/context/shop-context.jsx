@@ -48,7 +48,6 @@ export const ShopContextProvider = (props) => {
         stock = inventario.map(inv => (
             stock = inv.inventario
         ));
-        console.log(stock);
         return stock;
     }
 
@@ -71,7 +70,6 @@ export const ShopContextProvider = (props) => {
         .then(({ data }) => {
            setInventario(data);
             let cant = getInventario();
-            console.log("stock: "+cant);
                cant> 0 ? setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1 })) : void(0);
                cant===0 ? Swal.fire(`El inventario esta vacio`) : void(0);
                
@@ -82,13 +80,6 @@ export const ShopContextProvider = (props) => {
             console.log(error.message);
         }) 
     };
-
-    /*bueno
-    const addToCart = (itemId) => {
-        let stock = getInventario();
-        console.log("stock: "+stock);
-        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1 }))
-    };*/
 
     const removeFromCart = async (itemId) => { 
         await axios.get(`http://localhost:3001/inventario/${itemId}`)
@@ -101,7 +92,11 @@ export const ShopContextProvider = (props) => {
         }) 
     };
 
-    const contextValue = { cartItems, addToCart, removeFromCart, getTotalCartAmount, loggedChanger, logged, AdminChanger, admin,
+    const vaciarCart = () => { 
+        setCartItems(getDefaultCart());
+    };
+
+    const contextValue = { cartItems, addToCart, removeFromCart, vaciarCart, getTotalCartAmount, loggedChanger, logged, AdminChanger, admin,
                            payAumount,setPayAumount, nombreUser, NombreUser, cedulaUser, CedulaUser};
     return (
         <ShopContext.Provider value={contextValue}>
