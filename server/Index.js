@@ -18,6 +18,18 @@ const baseDatos =mysql.createConnection({
     database:"tienda"
 });
 
+/* lista los tipos de identificacion */
+app.get("/listaTiposIdentif",(req,res)=> {
+    baseDatos.query("SELECT * FROM tipo_identificacion",
+        (err,result)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send(result);
+            }
+        });
+});
 
 /* lista los datos de la tabla de productos */
 app.get("/listaProductos",(req,res)=> {
@@ -124,19 +136,16 @@ app.get("/buscarCedula/:cedula",(req,res)=> {
     );  
 });
 
-/* Crear un nuevo usuario */
-app.post("/createUsers",(req,res) =>{
-    const user= req.body.users;
+/* Crear un tercero nuevo */
+app.post("/createTercero",(req,res) =>{
     const cedula= req.body.cedula;
     const nombre= req.body.nombre;
     const email= req.body.email;
     const telefono= req.body.telefono;
     const direccion= req.body.direccion;
-
-    const password= req.body.password;
+    const tipoIdent = req.body.tipoIdent; 
     
-    
-    baseDatos.query("INSERT INTO terceros (cedula, nombre, correo, telefono, direccion) VALUES(?,?,?,?,?)",[cedula,nombre,email,telefono,direccion],
+    baseDatos.query("INSERT INTO terceros (cedula, nombre, correo, telefono, direccion,Tipo_identificacion) VALUES(?,?,?,?,?,?)",[cedula,nombre,email,telefono,direccion,tipoIdent],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -146,8 +155,16 @@ app.post("/createUsers",(req,res) =>{
             }
         }
     );
+});
 
-    baseDatos.query("INSERT INTO usuarios (user, password, cedula_tercero) VALUES(?,?,?)",[user,password,cedula],
+
+app.post("/createUsers",(req,res) =>{
+    const user= req.body.users;
+    const cedula= req.body.cedula;
+    const password= req.body.password;
+    
+
+    baseDatos.query("INSERT INTO usuarios (user, password, cedula_tercero, activo) VALUES(?,?,?,'Y')",[user,password,cedula],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -308,5 +325,3 @@ app.use(express.static('images/..'));
 app.listen(3001,()=>{
     console.log("escuchando por puerto 3001");
 });
-
-/*Pruebas */

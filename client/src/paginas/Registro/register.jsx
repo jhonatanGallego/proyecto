@@ -9,7 +9,9 @@ import Swal from 'sweetalert2';
 const Register = () => {
     let existe = 0;
     const [users, setUsers] = useState([]);
+    const [tipoIdents, setTipoIdents] = useState([]);
     //Valores es para crear el tercero
+    const [tipoIdent, setTipoIdent] = useState('');
     const [cedula, setCedula] = useState('');
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -33,6 +35,7 @@ const Register = () => {
 
     useEffect(() => {
         getUsers();
+        getTiposIdentificacion();
     }, [])
 
     const getUsers = async() => {
@@ -45,25 +48,35 @@ const Register = () => {
         existe = res.data.length; 
     }
 
+    const getTiposIdentificacion = async() => {
+        const res = await axios.get(`http://localhost:3001/listaTiposIdentif`);
+        console.log(res.data);
+        setTipoIdents(res.data);
+    }
+    
+
     const atras = () => {
         navigateLogin();
     }
 
     const store = async (e) => { 
         e.preventDefault();
-        if (nombre && password && telefono && email && cedula && direccion){
+        if (nombre && password && telefono && email && cedula && direccion && tipoIdent){
             getBuscarUser(email);
             if(existe>=1){
                 Swal.fire("El usuario digitado ya existe en la base de datos.");
             }else{
                 Swal.fire("Usuario creado satisfactoriamente");
+                //Para crear el tercero
+                await axios.post('http://localhost:3001/createTercero', {
+                    nombre: nombre, telefono: telefono, email: email, cedula: cedula, direccion: direccion, tipoIdent: tipoIdent });
+
+                //Para crear el usuario
                 await axios.post('http://localhost:3001/createUsers', {
-                    nombre: nombre, password: password, telefono: telefono, email: email, users: email,
-                    cedula: cedula, direccion: direccion });
+                    users: email, password: password, cedula: cedula});
                 navigateLogin();
                 
-            }
-            
+            }   
         }else{
             Swal.fire("Todos los campos son obligatorios.");
         }
@@ -74,6 +87,12 @@ const Register = () => {
         <div className="register-form">
             <h2>Registro</h2>
             <form onSubmit={store} action="/auth" method="post">
+            <select value={tipoIdent}  onChange={ (e) => setTipoIdent(e.target.value)} required>
+                <option selected disabled value="">Tipo de identificación</option>
+                {tipoIdents.map((tiposIde) => (
+                    <option value={tiposIde.id}>{tiposIde.descripcion}</option>
+                ))}
+            </select>
             <input 
                 value={cedula}
                 onChange={ (e) => setCedula(e.target.value)}
