@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { IconShoppingCartExclamation } from '@tabler/icons-react'
 
 const URI = 'http://localhost:3001/listaProductos/';
 
@@ -68,6 +69,7 @@ export const Cart = () => {
                 </div>
             </div>
             : <h1> Tu carrito esta vacio </h1>}
+            <IconShoppingCartExclamation stroke={1} size={100}/>
         </div>
     )
 };
