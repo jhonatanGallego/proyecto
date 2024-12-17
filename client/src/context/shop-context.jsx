@@ -71,10 +71,7 @@ export const ShopContextProvider = (props) => {
            setInventario(data);
             let cant = getInventario();
                cant> 0 ? setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1 })) : void(0);
-               cant===0 ? Swal.fire(`El inventario esta vacio`) : void(0);
-               
-            //setCartItems((prev) => ({...prev, [itemId]: prev[itemId] + 1 }));
-            
+               cant===0 ? Swal.fire(`El inventario esta vacio`) : void(0);           
         })
         .catch(error => {
             console.log(error.message);
@@ -82,14 +79,7 @@ export const ShopContextProvider = (props) => {
     };
 
     const removeFromCart = async (itemId) => { 
-        await axios.get(`http://localhost:3001/inventario/${itemId}`)
-        .then(({ data }) => {
-            //data==='Unbooked' ? setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1 })) : void(0);
-            setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1 }));
-        })
-        .catch(error => {
-            console.log(error.message);
-        }) 
+        setCartItems((prev) => ({...prev, [itemId]: prev[itemId] - 1 }));
     };
 
     const vaciarCart = () => { 

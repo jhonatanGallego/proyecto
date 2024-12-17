@@ -1,11 +1,10 @@
 //Librerias de react
 import React from 'react';
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //Componentes
 import { Navbar } from "./componentes/navbar.jsx";
 import {Footer} from "./componentes/Footer.jsx";
-import MenuSlider from "./componentes/MenuSlider.jsx";
 
 //Paginas
 import Login from "./paginas/Login/Login.jsx";
@@ -19,8 +18,6 @@ import { ShopAddtoCart } from './paginas/ShopAddtoCart/shopAddtoCart.jsx';
 
 //Context
 import { ShopContextProvider } from "./context/shop-context";
-
-
 
 
 function App() {

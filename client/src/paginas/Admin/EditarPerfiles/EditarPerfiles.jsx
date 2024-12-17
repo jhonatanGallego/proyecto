@@ -11,6 +11,7 @@ const EditarPerfiles = () => {
     const [password, setPassword] = useState('');
     //Tercero
     const [nombre, setNombre] = useState('');
+    const [tipoIdentificacion, setTipoIdentificacion] = useState('');
     const [cedula, setCedula] = useState('');
     const [telefono, setTelefono] = useState('');
     const [email, setEmail] = useState('');
@@ -32,6 +33,7 @@ const EditarPerfiles = () => {
         setPassword("");
         setEmail("");
         setTelefono("");
+        setTipoIdentificacion("");
         setCedula("");
         setDireccion("");
         setEditar(false);
@@ -44,6 +46,7 @@ const EditarPerfiles = () => {
         setPassword(val.password);
         setEmail(val.correo);
         setTelefono(val.telefono);
+        setTipoIdentificacion(val.Tipo_identificacion);
         setCedula(val.cedula);
         setDireccion(val.direccion);
       };
@@ -109,9 +112,9 @@ const EditarPerfiles = () => {
                 Swal.fire("El usuario digitado ya existe en la base de datos.");
             }else{
                 Swal.fire("Usuario creado satisfactoriamente");
-                await axios.post('http://localhost:3001/createUsers', {
+                await axios.post('http://localhost:3001/createTercero', {
                     nombre: nombre, password: password, telefono: telefono, email: email, users: email,
-                    cedula: cedula, direccion: direccion });
+                    cedula: cedula, direccion: direccion, tipoIdent: tipoIdentificacion });
             }
             
         }else{
@@ -124,6 +127,8 @@ const EditarPerfiles = () => {
             <div className="register-form">
                 {editar?<h2>Actualizar Datos</h2>:<h2>Registrar nuevo dato</h2>}
                 <form onSubmit={store} action="/auth" method="post">
+                    {editar?<input value={tipoIdentificacion} onChange={ (e) => setTipoIdentificacion(e.target.value)} type="text" name="tipoIdentif" id="tipoIdentif" placeholder="tipo de identificación" disabled/>
+                    :<input value={tipoIdentificacion} onChange={ (e) => setTipoIdentificacion(e.target.value)} type="text" name="tipoIdentif" id="tipoIdentif" placeholder="tipo de identificación"/>}
                     {editar?<input value={cedula} onChange={ (e) => setCedula(e.target.value)} type="text" name="cedula" id="cedula" placeholder="Cedula" disabled/>
                     :<input value={cedula} onChange={ (e) => setCedula(e.target.value)} type="text" name="cedula" id="cedula" placeholder="Cedula"/>}
                     <input 
@@ -143,8 +148,7 @@ const EditarPerfiles = () => {
                     onChange={ (e) => setDireccion(e.target.value)}
                     type="text" name="direccion" id="direccion" placeholder="Direccion"/>
                     {editar?null:<input value={email} onChange={ (e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Correo electronico"/>}
-                    {editar?null:<input type="submit" className="btn-login" value="Registrar" />}
-                    
+                    {editar?null:<input type="submit" className="btn-login" value="Registrar" />}                   
                 </form>
                 <br/> 
                 {editar?<button  className="btn-login" onClick={update}>Actualizar Usuario</button>:null}
@@ -156,7 +160,8 @@ const EditarPerfiles = () => {
                         <tr>
                             <th scope="col">Usuario</th>
                             <th scope="col">Contraseña</th>
-                            <th scope="col">Cedula</th>
+                            <th scope="col">Tipo Identificación</th>
+                            <th scope="col">Nro Identificación</th>
                             <th scope="col">Nombre completo</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Correo electronico</th>
@@ -169,7 +174,8 @@ const EditarPerfiles = () => {
                     return (
                         <tr>
                             <td scope="row">{val.user}</td>
-                            <td>{"****"} </td>
+                            <td>{"********"} </td>
+                            <td>{val.tipo_identificacion} </td>
                             <td>{val.cedula} </td>
                             <td>{val.nombre} </td>
                             <td>{val.telefono} </td>
